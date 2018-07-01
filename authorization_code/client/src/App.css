@@ -20,13 +20,16 @@
   text-decoration: none;
 }
 
-.search-songs {
+.recommend-button,
+.search-songs,
+.random-button {
   text-align: center;
   border-radius: 25px;
   margin-top: 25px;
   height: 50px;
   width: 300px;
   outline: none;
+  cursor: pointer;
 }
 
 .recommend-button {

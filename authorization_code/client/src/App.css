@@ -1,15 +1,14 @@
-
 .song-image {
   object-fit: cover;
 }
 
-.now-playing{
+.now-playing {
   background: lightgreen;
   color: white;
   border-radius: 20px;
 }
 
-.input-div{
+.input-div {
   display: flex;
   flex-direction: column;
 }
@@ -21,13 +20,16 @@
   text-decoration: none;
 }
 
-.search-songs {
+.recommend-button,
+.search-songs,
+.random-button {
   text-align: center;
   border-radius: 25px;
   margin-top: 25px;
   height: 50px;
   width: 300px;
   outline: none;
+  cursor: pointer;
 }
 
 div {
@@ -68,7 +70,6 @@ form {
   text-decoration: none;
   padding: 0;
   margin: 0;
-
 }
 
 .body {
@@ -84,11 +85,11 @@ form {
   margin-right: 30px;
 }
 
-.playlists{
+.playlists {
   color: white;
 }
 
-.playlist-name{
+.playlist-name {
   color: white;
   border: 1px solid white;
   text-align: center;
@@ -98,7 +99,7 @@ form {
   cursor: pointer;
 }
 
-.navbar{
+.navbar {
   width: 100%;
   height: 75px;
   border: 1px solid black;
@@ -124,7 +125,7 @@ body {
   background: black;
 }
 
-#login{
+#login {
   text-decoration: none;
   /* display: flex; */
   color: white;
@@ -141,7 +142,7 @@ body {
   color: lightgreen;
 }
 
-.logo{
+.logo {
   color: white;
   text-shadow: 2px 2px black;
   align-self: center;

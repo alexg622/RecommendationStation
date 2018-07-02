@@ -96,12 +96,6 @@ class App extends Component {
   }
 
   playIt(e, newTarget) {
-    {
-      /* TESTING
-
-    TESTING */
-    }
-
     let uri;
     if (newTarget !== undefined) {
       uri = newTarget.uri;
@@ -239,11 +233,6 @@ class App extends Component {
   }
 
   getRandomPlaylist(e) {
-    {
-      /*
-      
-    */
-    }
     let allCats = this.state.allCategories;
     let allCatNames = this.state.allCategoriesNames;
     let length = allCats.length;
@@ -333,13 +322,16 @@ class App extends Component {
     return (
       <div className="App">
         <div className="navbar">
+          <div>
+            <h1 className="logo" />
+          </div>
           <div id="margin-change" className="logo-div">
             <h1 className="logo">RecommendationStation</h1>
           </div>
-          return{" "}
+          {/*return{" "}*/}
           <a onClick={this.marginIt} id="login" href="http://localhost:8888">
-            {" "}
-            Login to Spotify{" "}
+            {/* {" "} */}
+            Login to Spotify
           </a>
         </div>
         <div className="body">
@@ -394,9 +386,7 @@ class App extends Component {
             allow="encrypted-media"
           />
         </div>
-        {/*
-          <div className="second-body">{this.showAlbums()}</div>
-        */}
+
         <div>
           <Carousel
             className="carousel-container"

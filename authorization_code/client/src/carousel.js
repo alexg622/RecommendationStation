@@ -3,10 +3,6 @@ import "./carousel.css";
 import CarouselItem from "./carousel_item";
 
 class Carousel extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   // componentWillReceiveProps(newProps) {
   //   console.log("WILL RECEIVE");
   //   console.log(newProps);

@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import "./carousel.css";
 
 class CarouselItem extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { playlist } = this.props;
 

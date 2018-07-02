@@ -223,8 +223,6 @@ class App extends Component {
   }
 
   handlePlayListSubmit(e) {
-    // console.log(this.state.userId);
-    // console.log(e.target.firstElementChild.value);
     spotifyApi
       .createPlaylist(this.state.userId, e.target.firstElementChild.value, {
         public: false
@@ -284,36 +282,51 @@ class App extends Component {
     // GET PLAYLIST'S ID (required for getting the tracks)
     let playlistId = randomUserPlaylist.id;
     // REQUEST PLAYLIST TRACKS FROM API
-    spotifyApi.getPlaylistTracks(ownerId, playlistId).then(data => {
-      // GET A RANDOM ARTIST ID FROM THE PLAYLIST
-      let artistIds = data.items.map(track => track.track.artists[0].id);
-      this.setState({ artistIds: artistIds });
-      let randomArtistId =
-        artistIds[Math.floor(Math.random() * artistIds.length)];
-      // USE RANDOM ARTIST ID TO FETCH RELATED ARTIST FROM API
-      spotifyApi.getArtistRelatedArtists(randomArtistId).then(data => {
-        // GET A RANDOM RELATED ARTIST
-        let relatedArtists = data.artists;
-        let randomRelatedArtist =
-          relatedArtists[Math.floor(Math.random() * relatedArtists.length)];
-        let randomRelatedArtistId = randomRelatedArtist.id;
-        // USER RANDOM RELATED ARTIST ID TO FETCH ALBUMS FROM API
-        spotifyApi.getArtistAlbums(randomRelatedArtistId).then(data => {
-          // POPULATE CAROUSEL WITH RELATED ARTIST'S ALBUMS
-          this.setState({ fetchedPlaylists: data.items });
+    spotifyApi.getPlaylistTracks(ownerId, playlistId).then(
+      data => {
+        // GET A RANDOM ARTIST ID FROM THE PLAYLIST
+        let artistIds = data.items.map(track => track.track.artists[0].id);
+        this.setState({ artistIds: artistIds });
+        let randomArtistId =
+          artistIds[Math.floor(Math.random() * artistIds.length)];
+        // USE RANDOM ARTIST ID TO FETCH RELATED ARTIST FROM API
+        spotifyApi.getArtistRelatedArtists(randomArtistId).then(
+          data => {
+            // GET A RANDOM RELATED ARTIST
+            let relatedArtists = data.artists;
+            let randomRelatedArtist =
+              relatedArtists[Math.floor(Math.random() * relatedArtists.length)];
+            let randomRelatedArtistId = randomRelatedArtist.id;
+            // USER RANDOM RELATED ARTIST ID TO FETCH ALBUMS FROM API
+            spotifyApi.getArtistAlbums(randomRelatedArtistId).then(
+              data => {
+                // POPULATE CAROUSEL WITH RELATED ARTIST'S ALBUMS
+                this.setState({ fetchedPlaylists: data.items });
 
-          // PICK ONE RANDOM ABLUM
-          let randomNum = Math.floor(Math.random() * data.items.length);
-          let randomAlbum = data.items[randomNum];
-          // SET CAROUSEL TITLE TO ARTIST's NAME
-          this.setState({ carouselTitle: randomAlbum.artists[0].name });
-          // MOUNT ALBUM TO PLAYER
-          let uri = randomAlbum.uri;
-          let iFrame = document.getElementById("important");
-          iFrame.src = iFrame.src.substring(0, 35) + uri;
-        });
-      });
-    });
+                // PICK ONE RANDOM ABLUM
+                let randomNum = Math.floor(Math.random() * data.items.length);
+                let randomAlbum = data.items[randomNum];
+                // SET CAROUSEL TITLE TO ARTIST's NAME
+                this.setState({ carouselTitle: randomAlbum.artists[0].name });
+                // MOUNT ALBUM TO PLAYER
+                let uri = randomAlbum.uri;
+                let iFrame = document.getElementById("important");
+                iFrame.src = iFrame.src.substring(0, 35) + uri;
+              },
+              function(err) {
+                console.log("Something went wrong!", err);
+              }
+            );
+          },
+          function(err) {
+            console.log("Something went wrong!", err);
+          }
+        );
+      },
+      function(err) {
+        console.log("Something went wrong!", err);
+      }
+    );
   }
 
   render() {
@@ -343,14 +356,7 @@ class App extends Component {
                 onChange={this.update}
               />
             </form>
-            <form onSubmit={this.handlePlayListSubmit}>
-              <input
-                className="search-songs"
-                placeholder="Create your playlist"
-                value={this.state.playListName}
-                onChange={this.updatePlayListName}
-              />
-            </form>
+
             {/*
               Testing
             */}

@@ -273,71 +273,47 @@ class App extends Component {
     );
   }
   makeRecommendation(e) {
-    // STILL NEED TO IMPLEMENT
-    {
-      /*
-      
-    */
-    }
+    // GRAB ALL USER PLAYLISTS
     let allPlaylists = this.state.playLists;
-    // let allCatNames = this.state.allCategoriesNames;
     let length = allPlaylists.length;
     let randomNum = Math.floor(Math.random() * length);
-    // this.setState({ carouselTitle: allCatNames[randomNum] });
+    // PICK A RANDOM PLAYLIST FROM THAT LIST OF PLAYLISTS
     let randomUserPlaylist = allPlaylists[randomNum];
-    // console.log(randomUserPlaylist);
+    // GET PLAYLIST'S OWNER ID (required for getting the tracks)
     let ownerId = randomUserPlaylist.owner.id;
+    // GET PLAYLIST'S ID (required for getting the tracks)
     let playlistId = randomUserPlaylist.id;
+    // REQUEST PLAYLIST TRACKS FROM API
     spotifyApi.getPlaylistTracks(ownerId, playlistId).then(data => {
+      // GET A RANDOM ARTIST ID FROM THE PLAYLIST
       let artistIds = data.items.map(track => track.track.artists[0].id);
-      let artistNames = data.items.map(track => track.track.artists[0].name);
       this.setState({ artistIds: artistIds });
-      console.log(artistIds);
-      console.log(artistNames);
       let randomArtistId =
         artistIds[Math.floor(Math.random() * artistIds.length)];
-      let randomArtistName =
-        artistNames[Math.floor(Math.random() * artistNames.length)];
-      // Check that we're getting a random artist id
-      console.log(randomArtistId);
-      // Check that we're getting a random artist name
-      console.log(randomArtistName);
-
+      // USE RANDOM ARTIST ID TO FETCH RELATED ARTIST FROM API
       spotifyApi.getArtistRelatedArtists(randomArtistId).then(data => {
-        let artists = data.artists;
-        let randomArtist = artists[Math.floor(Math.random() * artists.length)];
-        console.log(randomArtist.name);
-        // let genres = data.genres;
-        // let randomGenre = genres[Math.floor(Math.random() * genres.length)];
-        // console.log(randomGenre);
-        // console.log(data);
-      });
-      // random pick a artist id to use to fetch that artist's info
-      // after fetching that info, use the artist's genre, then select a genre
-      // use that genre to fetch playlist from that genre
-    });
-    let allArtistIds = this.state.artistIds;
-    let artistIdLength = allArtistIds.length;
-    let randomArtNum = Math.floor(Math.random() * artistIdLength);
-    let randomArtistId = allArtistIds[randomArtNum];
+        // GET A RANDOM RELATED ARTIST
+        let relatedArtists = data.artists;
+        let randomRelatedArtist =
+          relatedArtists[Math.floor(Math.random() * relatedArtists.length)];
+        let randomRelatedArtistId = randomRelatedArtist.id;
+        // USER RANDOM RELATED ARTIST ID TO FETCH ALBUMS FROM API
+        spotifyApi.getArtistAlbums(randomRelatedArtistId).then(data => {
+          // POPULATE CAROUSEL WITH RELATED ARTIST'S ALBUMS
+          this.setState({ fetchedPlaylists: data.items });
 
-    // spotifyApi.getCategoryPlaylists(allCats[randomNum], { limit: 50 }).then(
-    //   data => {
-    //     // Puts recommended playlists into the carousel
-    //     this.setState({ fetchedPlaylists: data.playlists.items });
-    //     // Puts a random recommended playlist into the play widget
-    //     let recommendedPlaylist =
-    //       data.playlists.items[
-    //         Math.floor(Math.random() * data.playlists.items.length)
-    //       ];
-    //     let uri = recommendedPlaylist.uri;
-    //     let iFrame = document.getElementById("important");
-    //     iFrame.src = iFrame.src.substring(0, 35) + uri;
-    //   },
-    //   function(err) {
-    //     console.log("Something went wrong!", err);
-    //   }
-    // );
+          // PICK ONE RANDOM ABLUM
+          let randomNum = Math.floor(Math.random() * data.items.length);
+          let randomAlbum = data.items[randomNum];
+          // SET CAROUSEL TITLE TO ARTIST's NAME
+          this.setState({ carouselTitle: randomAlbum.artists[0].name });
+          // MOUNT ALBUM TO PLAYER
+          let uri = randomAlbum.uri;
+          let iFrame = document.getElementById("important");
+          iFrame.src = iFrame.src.substring(0, 35) + uri;
+        });
+      });
+    });
   }
 
   render() {

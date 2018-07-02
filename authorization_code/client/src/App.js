@@ -28,7 +28,8 @@ class App extends Component {
       searchOutPut: "",
       playListName: "",
       userId: "",
-      carouselTitle: ""
+      carouselTitle: "",
+      artistIds: [] // Used for fetching recommendations
     };
     this.getPlayBackState = this.getPlayBackState.bind(this);
     this.playIt = this.playIt.bind(this);
@@ -72,7 +73,7 @@ class App extends Component {
 
     // Grab all playlist categories
     spotifyApi.getCategories({ limit: 50 }).then(data => {
-      console.log(data);
+      // console.log(data);
       let allCats = data.categories.items.map(item => item.id);
       let allCatNames = data.categories.items.map(item => item.name);
       this.setState({ allCategories: allCats });
@@ -172,7 +173,7 @@ class App extends Component {
       }
     });
     this.setState({ search: "" });
-    console.log(this.state.searchOutPut);
+    // console.log(this.state.searchOutPut);
   }
 
   update(e) {
@@ -222,8 +223,8 @@ class App extends Component {
   }
 
   handlePlayListSubmit(e) {
-    console.log(this.state.userId);
-    console.log(e.target.firstElementChild.value);
+    // console.log(this.state.userId);
+    // console.log(e.target.firstElementChild.value);
     spotifyApi
       .createPlaylist(this.state.userId, e.target.firstElementChild.value, {
         public: false
@@ -278,29 +279,65 @@ class App extends Component {
       
     */
     }
-    let allCats = this.state.allCategories;
-    let allCatNames = this.state.allCategoriesNames;
-    let length = allCats.length;
+    let allPlaylists = this.state.playLists;
+    // let allCatNames = this.state.allCategoriesNames;
+    let length = allPlaylists.length;
     let randomNum = Math.floor(Math.random() * length);
-    this.setState({ carouselTitle: allCatNames[randomNum] });
+    // this.setState({ carouselTitle: allCatNames[randomNum] });
+    let randomUserPlaylist = allPlaylists[randomNum];
+    // console.log(randomUserPlaylist);
+    let ownerId = randomUserPlaylist.owner.id;
+    let playlistId = randomUserPlaylist.id;
+    spotifyApi.getPlaylistTracks(ownerId, playlistId).then(data => {
+      let artistIds = data.items.map(track => track.track.artists[0].id);
+      let artistNames = data.items.map(track => track.track.artists[0].name);
+      this.setState({ artistIds: artistIds });
+      console.log(artistIds);
+      console.log(artistNames);
+      let randomArtistId =
+        artistIds[Math.floor(Math.random() * artistIds.length)];
+      let randomArtistName =
+        artistNames[Math.floor(Math.random() * artistNames.length)];
+      // Check that we're getting a random artist id
+      console.log(randomArtistId);
+      // Check that we're getting a random artist name
+      console.log(randomArtistName);
 
-    spotifyApi.getCategoryPlaylists(allCats[randomNum], { limit: 50 }).then(
-      data => {
-        // Puts recommended playlists into the carousel
-        this.setState({ fetchedPlaylists: data.playlists.items });
-        // Puts a random recommended playlist into the play widget
-        let recommendedPlaylist =
-          data.playlists.items[
-            Math.floor(Math.random() * data.playlists.items.length)
-          ];
-        let uri = recommendedPlaylist.uri;
-        let iFrame = document.getElementById("important");
-        iFrame.src = iFrame.src.substring(0, 35) + uri;
-      },
-      function(err) {
-        console.log("Something went wrong!", err);
-      }
-    );
+      spotifyApi.getArtistRelatedArtists(randomArtistId).then(data => {
+        let artists = data.artists;
+        let randomArtist = artists[Math.floor(Math.random() * artists.length)];
+        console.log(randomArtist.name);
+        // let genres = data.genres;
+        // let randomGenre = genres[Math.floor(Math.random() * genres.length)];
+        // console.log(randomGenre);
+        // console.log(data);
+      });
+      // random pick a artist id to use to fetch that artist's info
+      // after fetching that info, use the artist's genre, then select a genre
+      // use that genre to fetch playlist from that genre
+    });
+    let allArtistIds = this.state.artistIds;
+    let artistIdLength = allArtistIds.length;
+    let randomArtNum = Math.floor(Math.random() * artistIdLength);
+    let randomArtistId = allArtistIds[randomArtNum];
+
+    // spotifyApi.getCategoryPlaylists(allCats[randomNum], { limit: 50 }).then(
+    //   data => {
+    //     // Puts recommended playlists into the carousel
+    //     this.setState({ fetchedPlaylists: data.playlists.items });
+    //     // Puts a random recommended playlist into the play widget
+    //     let recommendedPlaylist =
+    //       data.playlists.items[
+    //         Math.floor(Math.random() * data.playlists.items.length)
+    //       ];
+    //     let uri = recommendedPlaylist.uri;
+    //     let iFrame = document.getElementById("important");
+    //     iFrame.src = iFrame.src.substring(0, 35) + uri;
+    //   },
+    //   function(err) {
+    //     console.log("Something went wrong!", err);
+    //   }
+    // );
   }
 
   render() {

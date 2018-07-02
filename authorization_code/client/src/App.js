@@ -63,7 +63,7 @@ class App extends Component {
         this.setState({ playLists: playLists });
       },
       function(err) {
-        this.setState({ loggedIn: false });
+        // this.setState({ loggedIn: false });
       }
     );
 
@@ -260,6 +260,8 @@ class App extends Component {
     );
   }
   makeRecommendation(e) {
+    let ownerId
+    let playlistId
     // GRAB ALL USER PLAYLISTS
     let allPlaylists = this.state.playLists;
     let length = allPlaylists.length;
@@ -267,9 +269,17 @@ class App extends Component {
     // PICK A RANDOM PLAYLIST FROM THAT LIST OF PLAYLISTS
     let randomUserPlaylist = allPlaylists[randomNum];
     // GET PLAYLIST'S OWNER ID (required for getting the tracks)
-    let ownerId = randomUserPlaylist.owner.id;
+    if (randomUserPlaylist !== undefined) {
+      ownerId = randomUserPlaylist.owner.id;
+    } else {
+      ownerId = 1
+    }
     // GET PLAYLIST'S ID (required for getting the tracks)
-    let playlistId = randomUserPlaylist.id;
+    if (randomUserPlaylist !== undefined) {
+     playlistId = randomUserPlaylist.id;
+    } else {
+      playlistId = 1
+    }
     // REQUEST PLAYLIST TRACKS FROM API
     spotifyApi.getPlaylistTracks(ownerId, playlistId).then(
       data => {

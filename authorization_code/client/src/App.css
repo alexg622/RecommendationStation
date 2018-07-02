@@ -8,9 +8,10 @@
   border-radius: 20px;
 }
 
-.input-div {
+.Input-div {
   display: flex;
   flex-direction: column;
+  margin-left: 125px;
 }
 
 .check-now-playing {
@@ -96,17 +97,27 @@ form {
 }
 
 .playlists {
-  color: white;
+  font-size: 35px;
+  font-weight: 100;
+  font-family: "Helvetica Neue";
+  color: #fff;
+  /* text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #09ff00, 0 0 30px #09ff00,
+    0 0 40px #09ff00, 0 0 55px #09ff00, 0 0 75px #09ff00; */
+  text-align: center;
 }
 
 .playlist-name {
   color: white;
   border: 1px solid white;
   text-align: center;
-  background: lightgreen;
+  background: rgb(0, 0, 0);
   margin-top: 10px;
   border-radius: 25px;
   cursor: pointer;
+  /* text-shadow: 0 0 5px #fff, 0 0 10px #09ff00, 0 0 15px #09ff00; */
+  font-weight: 300;
+  font-family: Helvetica, "Helvetica Neue";
+  font-size: 18px;
 }
 
 .navbar {
@@ -138,7 +149,7 @@ body {
 #login {
   text-decoration: none;
   /* display: flex; */
-  color: white;
+  /* color: white; */
   font-size: 25px;
   font-size: sans-serif;
   /* align-self: flex-end; */
@@ -147,6 +158,13 @@ body {
   cursor: pointer;
   /* position: fixed; */
   /* float: right; */
+  /* font-size: 35px; */
+  font-weight: 100;
+  font-family: "Helvetica Neue";
+  color: #fff;
+  /* text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #09ff00, 0 0 30px #09ff00,
+    0 0 40px #09ff00, 0 0 55px #09ff00, 0 0 75px #09ff00; */
+  text-align: center;
 }
 
 .login:hover {
@@ -155,13 +173,26 @@ body {
 }
 
 .logo {
-  color: white;
-  text-shadow: 2px 2px black;
+  /* color: white; */
+  /* text-shadow: 2px 2px black; */
   align-self: center;
-  font-size: sans-serif;
+  /* font-size: sans-serif; */
+  color: #ffffff;
+  /* font-family: "Open Sans", sans-serif; */
+  font-size: 50px;
+  font-family: "Helvetica Neue";
+  font-weight: 100;
+  color: #fff;
+  /* text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #09ff00, 0 0 30px #09ff00,
+    0 0 40px #09ff00, 0 0 55px #09ff00, 0 0 75px #09ff00; */
+  text-align: center;
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
+}
+
+.top-left-div {
+  width: 75px;
 }

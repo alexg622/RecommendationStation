@@ -322,7 +322,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="navbar">
-          <div>
+          <div className="top-left-div">
             <h1 className="logo" />
           </div>
           <div id="margin-change" className="logo-div">

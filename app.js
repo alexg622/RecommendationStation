@@ -6,14 +6,13 @@
  * For more information, read
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
- var Keys = require('./client/keys/keys')
  var express = require('express'); // Express web server framework
  var request = require('request'); // "Request" library
  var querystring = require('querystring');
  var cookieParser = require('cookie-parser');
 
- const client_id = Keys.client_id; // Your client id
- const client_secret = Keys.client_secret; // Your secret
+ const client_id = 'dcade6fcc4f04f5c8b73557545197140'; // Your client id
+ const client_secret = 'f08b44cb9eb74241a0270d46f31d2002'; // Your secret
  const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
  /**

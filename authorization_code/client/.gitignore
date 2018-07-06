@@ -5,7 +5,8 @@
 
 # testing
 /coverage
-
+/keys
+keys.js
 # production
 /build
 

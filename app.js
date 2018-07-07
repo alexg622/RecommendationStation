@@ -13,7 +13,7 @@
 
  const client_id = 'dcade6fcc4f04f5c8b73557545197140'; // Your client id
  const client_secret = 'f08b44cb9eb74241a0270d46f31d2002'; // Your secret
- const redirect_uri = 'https://recommendationstation.herokuapp.com/callback'; // Your redirect uri
+ const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
  /**
   * Generates a random string containing numbers and letters
@@ -101,7 +101,7 @@
          });
 
          // we can also pass the token to the browser to make requests from there
-         res.redirect('/' +
+         res.redirect('http://localhost:3000/#' +
            querystring.stringify({
              access_token: access_token,
              refresh_token: refresh_token

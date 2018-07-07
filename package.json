@@ -5,10 +5,10 @@
   "main": "app.js",
   "scripts": {
     "client-install": "npm install --prefix client",
-    "dev": "node app.js",
+    "start": "node app.js",
     "server": "nodemon app.js",
     "client": "npm start --prefix client",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
   "license": "MIT",

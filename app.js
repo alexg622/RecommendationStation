@@ -101,7 +101,7 @@
          });
 
          // we can also pass the token to the browser to make requests from there
-         res.redirect('https://alexg622.github.io/TheRecommendationStation/' +
+         res.redirect('https://alexg622.github.io/TheRecommendationStation/callback' +
            querystring.stringify({
              access_token: access_token,
              refresh_token: refresh_token
